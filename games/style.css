@@ -1,0 +1,293 @@
+:root{
+    --back: rgb(0, 0, 0);
+    --font: black;
+    --tile: rgb(0, 0, 0);
+    --res: rgb(0, 0, 0);
+    --themeicon: rgb(0, 0, 0);
+    --grid: rgb(0, 0, 0);
+}
+div{
+    border-style: none;
+}
+
+#feedback-button {
+    position: fixed;
+    right: -55px;
+    top: 40%;
+    transform: rotate(-90deg);
+    z-index: 999;
+  }
+#logo{
+    width: 55pt;
+    height: 55pt;
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+}
+  #feedback-button a {
+    display: inline-block;
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    border-radius: 5px 5px 0 0;
+    transition: all 0.3s ease;
+    height: 50px;
+  }
+  
+  #feedback-button a:hover {
+    background-color: #0056b3;
+    transform: translate(0px,-5px);
+  }
+.tile {
+    background-color: color-mix(in srgb, var(--tile) 60%, transparent 40%);
+    filter: drop-shadow(2px 4px 6px black);
+    box-shadow:
+        inset -50px -50px 80px color-mix(in srgb, white 5%, transparent),
+        inset 0 20px 40px color-mix(in srgb, white 4%, transparent);
+
+    background-image:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, white 6%, transparent) 0%,
+            color-mix(in srgb, var(--tile) 4%, transparent) 40%,
+            transparent 70%
+        );
+
+    background-blend-mode: screen;
+
+    border-radius: 20px;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    scale: 1;
+    transition: transform 0.2s, box-shadow 0.2s, background-color 0.2s;
+    text-decoration: none;
+    align-items: center;
+    cursor: pointer;
+text-wrap: wrap;
+}
+
+.tile:hover {
+    transform: scale(1.02);
+
+    background-color: color-mix(in srgb, var(--tile) 50%, transparent 50%);
+
+    box-shadow:
+        inset -60px -60px 100px color-mix(in srgb, white 7%, transparent),
+        inset 0 20px 40px color-mix(in srgb, white 5%, transparent);
+
+    background-image:
+        linear-gradient(
+            135deg,
+            color-mix(in srgb, white 8%, transparent) 0%,
+            color-mix(in srgb, var(--tile) 5%, transparent) 40%,
+            transparent 70%
+        );
+}
+
+.skeeb{
+    text-align: center;
+    color:gray;position: absolute;
+    bottom: 5px;
+}
+#skeeb{
+    text-align: center;
+    color:var(--tile);position: absolute;
+    bottom: 5px;
+}
+
+img{
+    width: 300px;
+    height: 300px;
+    border-style: none;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+    position: relative;
+    top: 0;
+    left: 0;
+}
+.sigma{
+    width: 100%;
+    text-align: center;
+    position: relative;
+    bottom: 5px;
+    font-size: 20pt;
+    height: 75px;
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    padding: 0;
+}
+body {
+    background-color: var(--back);
+    color: var(--font);
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-family: Arial, Helvetica, sans-serif;
+    width: 100vw;
+    overflow-x: hidden;
+    background-attachment: fixed;
+    background-image:
+        linear-gradient(135deg,
+            rgba(110, 60, 180, 0.2) 0%,
+            rgba(90, 50, 160, 0.15) 30%,
+            rgba(40, 200, 150, 0.15) 70%,
+            rgba(20, 180, 130, 0.2) 100%
+        );
+    background-size: cover;
+    margin: 0;
+}
+
+#starfield {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1; /* Behind your content */
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.star {
+    position: absolute;
+    background-color: white;
+    border-radius: 50%;
+    opacity: 0.5;
+    animation: twinkleStar 4s infinite ease-in-out alternate;
+}
+
+@keyframes twinkleStar {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+element-selector {
+    overflow-x: hidden;
+}
+#res{
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    box-shadow: 0px 0px 10px var(--font);
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background-color: var(--res);
+    border: none;
+    color: var(--themeicon);
+    cursor: pointer;
+}
+#title{
+    font-size: 65pt;
+    position: relative;
+    margin: 10px;
+    margin-top: 50px;
+    width: 100vw;
+    text-align: center;
+
+}
+#sigma{
+    font-size: 25pt;
+    position: relative;
+    margin: 10px;
+    width: 100vw;
+    text-align: center;
+
+}
+#sigma2{
+    font-size: 18pt;
+    position: relative;
+    width: 100vw;
+    text-align: center;
+    padding-bottom: 10px;
+}
+#tilecontainer{
+    width: 100vw;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    top: 13vh;
+}
+#tilecontainer h2 {
+    margin-top: 20px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.section {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Adjust your existing .gametile styles as needed */
+#search{
+    color: var(--font);
+    background-color: var(--tile);
+    border: none;
+    width: 400px;
+    font-size: 13pt;
+    padding: 10px;
+    margin: 20px;
+    outline: none;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+#blob{
+    color: var(--font);
+    background-color: var(--tile);
+    border: none;
+    width: 400px;
+    font-size: 13pt;
+    padding: 10px;
+    margin: 20px;
+    outline: none;
+    border-radius: 10px;
+}
+#download{
+    position: relative;
+    top: -60px;
+    left: 450px;
+    background-color: var(--tile);
+    padding: 10px;
+    border-radius: 10px;
+    user-select: none;
+    padding-left: none;
+    width: 100px;
+    border: none;
+    font-size: 13pt;
+    color: var(--font);
+}
+
+#searchdiv{
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    position: relative;
+    left: calc(50vw - 250px);
+}
+#m{
+    position: relative;
+    top: 7px;
+    left: -20px;
+    background-color: var(--tile);
+    padding: 8px;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    user-select: none;
+    padding-left: none;
+    width: 25px;
+}
+#m:hover{
+    cursor: pointer;
+}
