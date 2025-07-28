@@ -418,7 +418,7 @@ function ppfnTabCloak(title, favicon) {
 function ppfnResetTabCloak() {
     document.title = "PPFN-Unblocker";
     let link = document.querySelector("link[rel~='icon']");
-    if (link) link.href = "https://raw.githubusercontent.com/ppfn-official/ppfn/refs/heads/MAIN/ppfn.png";
+    if (link) link.href = "/ppfn-unblocker/ppfn.png";
 }
 
 // --- About:Blank Cloak ---
