@@ -1,10 +1,10 @@
 # PPFN
 
 <!-- Badges -->
-![GitHub repo size](https://img.shields.io/github/repo-size/poopoofartnut/ppfn)
-![GitHub stars](https://img.shields.io/github/stars/poopoofartnut/ppfn?style=social)
-![GitHub license](https://img.shields.io/github/license/poopoofartnut/ppfn)
-![Issues](https://img.shields.io/github/issues/poopoofartnut/ppfn)
+![GitHub repo size](https://img.shields.io/github/repo-size/ppfn-games/ppfn)
+![GitHub stars](https://img.shields.io/github/stars/ppfn-games/ppfn?style=social)
+![GitHub license](https://img.shields.io/github/license/ppfn-games/ppfn)
+![Issues](https://img.shields.io/github/issues/ppfn-games/ppfn)
 
 Welcome to **PPFN** — a simple, fast, and clean gaming site built from the ground up. PPFN is designed for easy hosting on a web server or a static hosting service like GitHub Pages. It provides a collection of HTML5 games in a user-friendly interface, making it easy to play and manage games from one place.
 
