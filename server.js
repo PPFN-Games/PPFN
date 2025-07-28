@@ -43,7 +43,12 @@ app.use("/uv/", express.static(uvPath));
 app.use("/epoxy/", express.static(epoxyPath));
 app.use("/baremux/", express.static(baremuxPath));
 
-// Catch-all for 404
+// Serve custom favicon before static
+app.get('/favicon.ico', (req, res) => {
+  res.sendFile(join(publicPath, 'favicon.ico'));
+});
+
+// Catch-all 404
 app.use((req, res) => {
   res.status(404).sendFile(join(publicPath, "404.html"));
 });
