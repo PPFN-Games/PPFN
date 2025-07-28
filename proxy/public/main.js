@@ -155,10 +155,13 @@ Object.defineProperty(iframe, 'src', {
         if (urlBarFocused) return;
         try {
             // Get iframe src
-            let src = iframe.src;
+            let src = iframe.contentWindow.location.href;
+            console.log("Current iframe src:", src);
             // Find the /uv/service/ part
             const prefix = __uv$config && __uv$config.prefix ? __uv$config.prefix : "/uv/service";
             const idx = src.indexOf(prefix);
+            console.log("Prefix index:", idx, "Prefix:", prefix);
+            
             if (idx !== -1) {
                 // Get the encoded part after /uv/service/
                 let encoded = src.slice(idx + prefix.length);
@@ -203,55 +206,64 @@ Object.defineProperty(iframe, 'src', {
         });
 
         urlDiv.addEventListener('keydown', async function(event) {
-            if (event.key === "Enter" && urlDiv.textContent !== "") {
-                event.preventDefault();
-                urlDiv.blur();
-                let url = urlDiv.textContent.trim();
+    if (event.key === "Enter" && urlDiv.textContent.trim() !== "") {
+        event.preventDefault();
+        urlDiv.blur();
+        let input = urlDiv.textContent.trim();
+        let url = "";
 
-                // Check for ppfn:// prefix
-                if (url.startsWith("ppfn://")) {
-                    const pageName = url.slice("ppfn://".length).trim();
-                    if (pageName) {
-                        const safePageName = pageName.replace(/[^a-zA-Z0-9_-]/g, "");
-                        iframe.src = `/ppfn-pages/${safePageName}.html`;
-                    }
-                    return;
-                }
-
-                if (!url.includes(".")) {
-                    url = "https://duckduckgo.com/?q=" + encodeURIComponent(url) + "&ia=web";
-                } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                    url = "https://" + url;
-                }
-
-                async function setupTransport() {
-                    if (!window.baremuxConnection) {
-                        window.baremuxConnection = new BareMux.BareMuxConnection("/baremux/worker.js");
-                        const wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
-                        try {
-                            await window.baremuxConnection.setTransport("/baremux/index.mjs", [{ wisp: wispUrl }]);
-                        } catch (bareErr) {
-                            try {
-                                await window.baremuxConnection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
-                            } catch (epoxyErr) {
-                                alert("Both proxy transports failed. Please try again later.");
-                                window.baremuxConnection = null;
-                                return false;
-                            }
-                        }
-                    }
-                    return true;
-                }
-
-                const ok = await setupTransport();
-                if (!ok) return;
-
-                try {
-                    const encodedUrl = __uv$config.encodeUrl(url);
-                    iframe.src = __uv$config.prefix + encodedUrl;
-                } catch (e) {}
+        // Check for ppfn:// prefix
+        if (input.startsWith("ppfn://")) {
+            const pageName = input.slice("ppfn://".length).trim();
+            if (pageName) {
+                const safePageName = pageName.replace(/[^a-zA-Z0-9_-]/g, "");
+                iframe.src = `/ppfn-pages/${safePageName}.html`;
             }
-        });
+            return;
+        }
+
+        // Regular expression to detect if the input is a valid URL
+        const urlPattern = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,}(:\d+)?(\/\S*)?$/;
+
+        if (urlPattern.test(input)) {
+            // Looks like a URL
+            url = input.startsWith("http://") || input.startsWith("https://") ? input : "https://" + input;
+        } else {
+            // Treat as search query
+            url = "https://duckduckgo.com/?q=" + encodeURIComponent(input) + "&ia=web";
+        }
+
+        // Setup BareMux transport
+        async function setupTransport() {
+            if (!window.baremuxConnection) {
+                window.baremuxConnection = new BareMux.BareMuxConnection("/baremux/worker.js");
+                const wispUrl = (location.protocol === "https:" ? "wss" : "ws") + "://" + location.host + "/wisp/";
+                try {
+                    await window.baremuxConnection.setTransport("/baremux/index.mjs", [{ wisp: wispUrl }]);
+                } catch (bareErr) {
+                    try {
+                        await window.baremuxConnection.setTransport("/epoxy/index.mjs", [{ wisp: wispUrl }]);
+                    } catch (epoxyErr) {
+                        alert("Both proxy transports failed. Please try again later.");
+                        window.baremuxConnection = null;
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        const ok = await setupTransport();
+        if (!ok) return;
+
+        try {
+            const encodedUrl = __uv$config.encodeUrl(url);
+            iframe.src = __uv$config.prefix + encodedUrl;
+        } catch (e) {
+            console.error("Failed to encode or set iframe URL:", e);
+        }
+    }
+});
     }
 
 
