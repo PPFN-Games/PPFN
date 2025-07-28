@@ -477,7 +477,7 @@ function ppfnDisableClickoff() {
 }
 function ppfnClickoffHandler() {
     if (clickoffEnabled) {
-        ppfnTabCloak("Google Docs", "assets/img/docs.png");
+        ppfnTabCloak("Google Docs", "/ppfn-unblocker/assets/img/docs.png");
     }
 }
 
