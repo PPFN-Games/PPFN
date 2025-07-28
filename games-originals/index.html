@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <title>PPFN</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5720904141413722"crossorigin="anonymous"></script>
+    <!-- Cronitor RUM -->
+<script async src="https://rum.cronitor.io/script.js"></script>
+<script>
+    window.cronitor = window.cronitor || function() { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+    cronitor('config', { clientKey: '8b9ac14f693662c7e4489199bffaf6ae' });
+    const today = new Date().toISOString().split('T')[0]; // Get today's date in YYYY-MM-DD format
+        const lastVisit = localStorage.getItem('lastVisitDate');
+
+        if (lastVisit !== today) {
+            // If the last visit date is not today, track the viewer as unique
+            cronitor("track", "UniqueViewers");
+            localStorage.setItem('lastVisitDate', today); // Update the last visit date to today
+        }
+        const user = localStorage.getItem('user');
+
+        if (user != 1) {
+            // If the last visit date is not today, track the viewer as unique
+            cronitor("track", "AllTimeUniqueViewers");
+            localStorage.setItem('user', 1); // Update the last visit date to today
+        }
+</script>
+
+</head>
+<body>
+  <div id="info-bubble">
+  <button id="info-bubble-close" aria-label="Close info" style="position:absolute;top:10px;right:14px;background:rgba(255,255,255,0.4);border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;font-size:1.2em;line-height:1;z-index:2;">×</button>
+  <strong><span id="info-bubble-url"></span></strong><br><br>
+  The actual site URL changes periodically.<br>
+  <b>poopoofartnut.xyz</b> will always redirect you to the current page.<br>
+  <a id="bookmark-btn" href="https://poopoofartnut.xyz" style="text-wrap: none;" draggable="true">Drag this into the bookmarks bar to bookmark poopoofartnut.xyz</a>
+</div>
+  <div id="starfield"></div>
+  <div id="feedback-button">
+    <a href="/form/index.html" target="_blank">Feedback</a>
+  </div>
+  <!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "920f3ad58e294239bff53711d6bc785d"}'></script><!-- End Cloudflare Web Analytics -->
+    <h1 id="title"> <img src="favicon.png" alt="PPFN Logo" id="logo">PPFN</h1>
+
+    <div id="tilecontainer">
+    </div>
+    <button id="res" onclick="change()"></button>
+    
+  </div>
+</body>
+<script data-name="BMC-Widget" data-cfasync="false" src="https://cdnjs.buymeacoffee.com/1.0.0/widget.prod.min.js" data-id="mirokokki" data-description="Support me on Buy me a coffee!" data-message="If you don't donate i'll take down the site" data-color="#5F7FFF" data-position="Right" data-x_margin="18" data-y_margin="18"></script>
+</html>
+<script>
+    var gamelist = [ 
+  {
+    "link": "flash-games/",
+    "imgSrc": "flash.png",
+    "title": "Flash Games"
+  }, 
+  {
+    "link": "html-games/",
+    "imgSrc": "html.png",
+    "title": "HTML Games"
+  },
+  {
+    "link": "retro-games/",
+    "imgSrc": "retro.png",
+    "title": "Retro Games"
+  },
+  {
+    "link": "ppfn-unblocker/",
+    "imgSrc": "ppfn.png",
+    "title": "PPFN Unblocker"
+  } 
+];
+// Add this to your script
+document.getElementById('bookmark-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  const url = 'https://poopoofartnut.xyz';
+  const title = 'PPFN';
+  if (window.sidebar && window.sidebar.addPanel) {
+    // Firefox <23
+    window.sidebar.addPanel(title, url, '');
+  } else if (window.external && ('AddFavorite' in window.external)) {
+    // IE Favorites
+    window.external.AddFavorite(url, title);
+  } else {
+    // Most browsers: show instructions
+    alert("Drag this button to your bookmarks bar to bookmark poopoofartnut.xyz");
+  }
+});
+let themeOptions = {};  // Initialize immediately
+
+async function fetchThemes() {
+    try {
+        const response = await fetch('/api/theme');
+        themeOptions = await response.json();
+    } catch (err) {
+        console.error("Failed to load themes from server:", err);
+    }
+}
+
+async function change() {
+    if (Object.keys(themeOptions).length === 0) {
+        await fetchThemes();
+    }
+
+    if (localStorage.getItem('theme') === '1') {
+        localStorage.setItem("theme", '0');
+        themeToggle('light');
+    } else {
+        localStorage.setItem("theme", '1');
+        themeToggle('dark');
+    }
+}
+
+function themeToggle(themeName) {
+    if (!themeOptions[themeName]) {
+        console.error("Invalid theme:", themeName);
+        return;
+    }
+
+    let root = document.documentElement;
+    let theme = themeOptions[themeName];
+
+    for (const [key, value] of Object.entries(theme)) {
+        if (key !== 'icon') {  // skip 'icon' when setting CSS variables
+            root.style.setProperty(`--${key}`, value);
+        }
+    }
+
+    document.getElementById("res").innerHTML =
+        `<span id='g' class='material-symbols-outlined'>${theme.icon}</span>`;
+}
+
+(async () => {
+    await fetchThemes();
+    let localskib = localStorage.getItem('theme') === "1" ? "dark" : "light";
+    themeToggle(localskib);  // Now themeOptions is guaranteed populated
+})();
+if (!localStorage.getItem("theme")) {
+    localStorage.setItem("theme", '1');  // Default to dark theme
+}
+var dataArr = {};
+window.dataArr = gamelist.sort((a, b) => a.title.localeCompare(b.title));
+
+
+function showPopup() {
+    const popup = document.createElement('div');
+    popup.classList.add('popup');
+    popup.innerHTML = '<p>Submission completed</p><span class="checkmark">✓</span>';
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+        document.body.removeChild(popup);
+    }, 2000); // Remove the popup after 2 seconds
+}
+
+var div = document.getElementById("tilecontainer");
+div.innerHTML = ""; 
+dataArr.forEach(function(game) {
+    var tile = document.createElement('div');
+    tile.addEventListener('click', function() {location.href = game.link}, false);
+    tile.classList.add("tile");
+    tile.innerHTML = '<img src="'+game.imgSrc+'" alt="placeholder"><p class="sigma">'+game.title+'</p>';
+    div.append(tile);
+});
+function opentab(tabName) {
+  var i;
+  var x = document.getElementsByClassName("tab");
+  for (i = 0; i < x.length; i++) {
+    x[i].style.display = "none";  
+  }
+  document.getElementById(tabName).style.display = "block";
+  
+  // Update active tab styling
+  var tabs = document.getElementsByClassName("tabs");
+  for (i = 0; i < tabs.length; i++) {
+    tabs[i].classList.remove("active");
+  }
+  
+  // Add active class to the clicked tab
+  document.querySelector('[onclick="opentab(\'' + tabName + '\')"]').classList.add("active");
+}
+var e;
+function openpop(){
+  if (e==true){
+    document.getElementById("pullup").style="transform:translate(0, 0);";
+    e=false;
+  }else{
+    document.getElementById("pullup").style="transform:translate(0, -200px);";
+    e=true;
+  }
+  
+}
+const starCount = 1000;  // Adjust for density
+const starfield = document.getElementById('starfield');
+
+function random(min, max) {
+    return Math.random() * (max - min) + min;
+}
+
+for (let i = 0; i < starCount; i++) {
+    const star = document.createElement('div');
+    star.classList.add('star');
+
+    const size = random(0.5, 3);  // Vary star sizes
+    star.style.width = `${size}px`;
+    star.style.height = `${size}px`;
+
+    star.style.top = `${random(0, window.innerHeight)}px`;
+    star.style.left = `${random(0, window.innerWidth)}px`;
+
+    star.style.opacity = Math.random() * 0.8 + 0.2;
+    star.style.animationDuration = `${random(3, 8)}s`;
+
+    starfield.appendChild(star);
+}
+
+// Set info bubble URL text dynamically
+document.getElementById('info-bubble-url').textContent =
+  `Why am I on "${document.location.href}" instead of poopoofartnut.xyz?`;
+
+// Dismiss info bubble on X click
+document.getElementById('info-bubble-close').onclick = function() {
+  const bubble = document.getElementById('info-bubble');
+  bubble.classList.add('fade-out');
+  bubble.addEventListener('transitionend', function handler() {
+    bubble.style.display = 'none';
+    bubble.removeEventListener('transitionend', handler);
+  });
+};
+</script>
