@@ -159,6 +159,11 @@ body {
   max-width: 320px;
   border: 1px solid rgba(255,255,255,0.3);
   font-family: inherit;
+  padding: 20px;
+  transition: all 0.3s ease;
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease, visibility 0.3s;
 }
 @media (max-width: 600px) {
   #info-bubble {
@@ -339,4 +344,11 @@ element-selector {
 }
 #m:hover{
     cursor: pointer;
+}
+
+/* Fade-out class for smooth transition */
+#info-bubble.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
