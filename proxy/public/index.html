@@ -14,9 +14,11 @@
 </head>
 <body>
   <nav id="nav">
+    <div onclick="window.open('/', '_self');" id="logo-container">
     <img id="logo" src="https://raw.githubusercontent.com/ppfn-official/ppfn/refs/heads/MAIN/ppfn.png" alt="PPFN Logo">
     <b id="ppfn-txt">PPFN</b>
     <p id="unblocker-txt">Unblocker</p>
+    </div>
     <div id="home" class="navb"><span class="material-symbols-outlined">home</span></div>
     <div id="reload"class="navb"><span class="material-symbols-outlined">refresh</span></div>
     <div id="back"class="navb"><span class="material-symbols-outlined">arrow_back</span></div>
@@ -127,6 +129,7 @@
 #logo{
     height: 80%;
     padding-left: 10px;
+    padding-right: 10px;
 }
 body{
     margin: 0;
@@ -162,16 +165,23 @@ body{
     border-radius: 100px;
     cursor: pointer;
 }
+#logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    user-select: none;
+    height: 100%;
+}
 #ppfn-txt{
     font-size: 200%;
-    padding-top: 100%;
-    padding-bottom: 100%;
     user-select: none;
+    padding-right: 10px;
 }
 #unblocker-txt{
     font-size:150%;
     user-select: none;
-
+  padding-right: 10px;
 }
 
 /* Extra small devices (phones, 600px and down) */
