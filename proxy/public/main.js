@@ -416,9 +416,9 @@ function ppfnTabCloak(title, favicon) {
     }
 }
 function ppfnResetTabCloak() {
-    document.title = "PPFN-Unblocker";
+    document.title = "ppfn-u";
     let link = document.querySelector("link[rel~='icon']");
-    if (link) link.href = "/ppfn-unblocker/ppfn.png";
+    if (link) link.href = "/ppfn-u/ppfn.png";
 }
 
 // --- About:Blank Cloak ---
@@ -477,7 +477,7 @@ function ppfnDisableClickoff() {
 }
 function ppfnClickoffHandler() {
     if (clickoffEnabled) {
-        ppfnTabCloak("Google Docs", "/ppfn-unblocker/assets/img/docs.png");
+        ppfnTabCloak("Google Docs", "/ppfn-u/assets/img/docs.png");
     }
 }
 

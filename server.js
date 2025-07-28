@@ -33,7 +33,7 @@ app.get('/api/theme', (req, res) => {
 });
 app.use(express.static("games"));
 // Serve your own /public directory first
-app.use("/ppfn-unblocker/", express.static(join(process.cwd(), "proxy/public")));
+app.use("/ppfn-u/", express.static(join(process.cwd(), "proxy/public")));
 
 // Load our publicPath first and prioritize it over UV.
 app.use(express.static(publicPath));
