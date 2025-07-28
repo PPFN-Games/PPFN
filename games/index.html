@@ -33,6 +33,12 @@
 
 </head>
 <body>
+  <div id="info-bubble">
+  <strong><span id="info-bubble-url"></span></strong><br><br>
+  The actual site URL changes periodically.<br>
+  <b>poopoofartnut.xyz</b> will always redirect you to the current page.
+  <a id="bookmark-btn" href="https://poopoofartnut.xyz" style="text-wrap: none;" draggable="true">Drag this into the bookmarks bar to bookmark poopoofartnut.xyz</a>
+</div>
   <div id="starfield"></div>
   <div id="feedback-button">
     <a href="/form/index.html" target="_blank">Feedback</a>
@@ -71,7 +77,22 @@
     "title": "PPFN Unblocker"
   } 
 ];
-
+// Add this to your script
+document.getElementById('bookmark-btn').addEventListener('click', function(e) {
+  e.preventDefault();
+  const url = 'https://poopoofartnut.xyz';
+  const title = 'PPFN';
+  if (window.sidebar && window.sidebar.addPanel) {
+    // Firefox <23
+    window.sidebar.addPanel(title, url, '');
+  } else if (window.external && ('AddFavorite' in window.external)) {
+    // IE Favorites
+    window.external.AddFavorite(url, title);
+  } else {
+    // Most browsers: show instructions
+    alert("Drag this button to your bookmarks bar to bookmark poopoofartnut.xyz");
+  }
+});
 let themeOptions = {};  // Initialize immediately
 
 async function fetchThemes() {
@@ -200,4 +221,7 @@ for (let i = 0; i < starCount; i++) {
     starfield.appendChild(star);
 }
 
+// Set info bubble URL text dynamically
+document.getElementById('info-bubble-url').textContent =
+  `Why am I on ${document.location.href} instead of poopoofartnut.xyz?`;
 </script>
