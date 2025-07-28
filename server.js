@@ -43,10 +43,9 @@ app.use("/uv/", express.static(uvPath));
 app.use("/epoxy/", express.static(epoxyPath));
 app.use("/baremux/", express.static(baremuxPath));
 
-// Error for everything else
+// Catch-all for 404
 app.use((req, res) => {
-  res.status(404);
-  res.sendFile(join(publicPath, "404.html"));
+  res.status(404).sendFile(join(publicPath, "404.html"));
 });
 
 const server = createServer();

@@ -1,10 +1,10 @@
 :root{
-    --back: rgb(230, 230, 230);
-    --font: black;
-    --tile: rgb(200, 200, 200);
-    --res: white;
-    --themeicon: white;
-    --grid: rgb(189, 189, 189);
+    --back: rgba(11, 11, 11, 1);
+    --font: white;
+    --tile: rgba(15, 15, 15, 1);
+    --res: rgb(230, 230, 230);
+    --themeicon: black;
+    --grid: rgba(28, 28, 28, 1);
 }
 div{
     border-style: none;
